@@ -3,7 +3,11 @@ version: '3.7'
 
 services:
   wazuh:
-    image: wazuh/wazuh-odfe:4.0.1_1.11.0
+    build:
+      context: wazuh-odfe/
+      args:
+        - FILEBEAT_CHANNEL=filebeat
+    image: wazuh/wazuh:4.0.1_7.9.1
     hostname: wazuh-manager
     restart: always
     ports:
@@ -30,7 +34,7 @@ services:
       - filebeat_var:/var/lib/filebeat
 
   elasticsearch:
-    image: amazon/opendistro-for-elasticsearch:1.11.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.1
     hostname: elasticsearch
     restart: always
     ports:
